@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: Apache-2.0
 pragma solidity ^0.8.7;
 
 /**
@@ -24,7 +25,7 @@ contract Betting {
         // Check if winner
         if(counter == 0) {
             // Counter reached zero, so pay out.
-            payable(msg.sender).send(address(this).balance);
+            payable(msg.sender).transfer(address(this).balance);
             // Reset counter
             counter = 1000;
         } 
