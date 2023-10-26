@@ -1,0 +1,7 @@
+{
+    "functions": {
+        "bet": "0x0039",
+        "reset": "0x0043",
+        "target": "0x0063"
+    }
+}
