@@ -1,9 +1,9 @@
 include "../../evm-dafny/src/dafny/evm.dfy"
 include "../../evm-dafny/src/dafny/core/code.dfy"
 include "Betting_0_header.dfy"
+include "Betting_0_bet.dfy"
 include "Betting_0_reset.dfy"
 include "Betting_0_target.dfy"
-include "Betting_0_bet.dfy"
 
 module main {
 	import opened Opcode
@@ -11,9 +11,9 @@ module main {
 	import opened Memory
 	import opened Bytecode
 	import opened Header
+	import opened bet
 	import opened reset
 	import opened target
-	import opened bet
 
 	method block_0_0x0000(st': EvmState.ExecutingState) returns (st'': EvmState.State)
 	requires st'.evm.code == Code.Create(BYTECODE_0)
@@ -40,6 +40,7 @@ module main {
 		assume st.IsJumpDest(0x34);
 		st := JumpI(st);
 		if st.PC() == 0x34 { st := block_0_0x0034(st); return st;}
+		assert |st.evm.context.callData| >= 0x04; // ADDED BY DJP
 		st := block_0_0x000d(st);
 		return st;
 	}
@@ -51,6 +52,8 @@ module main {
 	requires st'.MemSize() >= 0x60 && st'.Read(0x40) == 0x80
 	// Stack height(s)
 	requires st'.Operands() == 0
+	//
+	requires |st'.evm.context.callData| >= 0x04 // ADDED BY DJP
 	{
 		var st := st';
 		// |fp=0x0080||
@@ -82,6 +85,8 @@ module main {
 	requires st'.Operands() == 3
 	// Static stack items
 	requires (st'.Peek(0) == 0x39)
+	//
+	requires |st'.evm.context.callData| >= 0x04 // ADDED BY DJP
 	{
 		var st := st';
 		// |fp=0x0080|0x39,_,_|

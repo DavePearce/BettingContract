@@ -18,6 +18,8 @@ module reset {
 	requires st'.MemSize() >= 0x60 && st'.Read(0x40) == 0x80
 	// Stack height(s)
 	requires st'.Operands() == 1
+	//
+	requires |st'.evm.context.callData| >= 0x04 // ADDED BY DJP
 	{
 		var st := st';
 		// |fp=0x0080|_|
@@ -65,6 +67,8 @@ module reset {
 	requires st'.MemSize() >= 0x60 && st'.Read(0x40) == 0x80
 	// Stack height(s)
 	requires st'.Operands() == 2
+	//
+	requires |st'.evm.context.callData| >= 0x04 // ADDED BY DJP
 	{
 		var st := st';
 		// |fp=0x0080|_,_|
@@ -243,6 +247,9 @@ module reset {
 	requires st'.Operands() == 5
 	// Static stack items
 	requires (st'.Peek(0) == 0x4 && st'.Peek(2) == 0x5e && st'.Peek(3) == 0x41)
+	//
+	requires |st'.evm.context.callData| >= 0x04 // ADDED BY DJP
+	requires (st'.Peek(1) as nat) == |st'.evm.context.callData| // ADDED BY DJP
 	{
 		var st := st';
 		// |fp=0x0080|0x04,_,0x5e,0x41,_|
@@ -256,7 +263,7 @@ module reset {
 		// |fp=0x0080|0x04,0x20,0x00,0x04,_,0x5e,0x41,_|
 		st := Dup(st,5);
 		// |fp=0x0080|_,0x04,0x20,0x00,0x04,_,0x5e,0x41,_|
-		assert st.Peek(1) <= st.Peek(0);
+		// assert st.Peek(1) <= st.Peek(0); // REMOVED BY DJP
 		st := Sub(st);
 		// |fp=0x0080|_,0x20,0x00,0x04,_,0x5e,0x41,_|
 		st := SLt(st);

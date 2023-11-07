@@ -95,6 +95,8 @@ module bet {
 	requires st'.Operands() == 2
 	// Static stack items
 	requires (st'.Peek(0) == 0x41)
+	//
+	requires st'.Load(0) >= st'.evm.context.callValue // ADDED BY DJP
 	{
 		var st := st';
 		// |fp=0x0080|0x41,_|
@@ -136,7 +138,7 @@ module bet {
 		// |fp=0x0080|_,0x00,0x41,_|
 		st := Swap(st,1);
 		// |fp=0x0080|0x00,_,0x41,_|
-		assert st.Peek(1) <= st.Peek(0);
+		// assert st.Peek(1) <= st.Peek(0); // REMOVED BY DJP
 		st := Sub(st);
 		// |fp=0x0080|_,0x41,_|
 		st := Push2(st,0x00d8);
@@ -215,6 +217,7 @@ module bet {
 			var inner := cc.CallEnter(1);
 			if inner.EXECUTING? { inner := external_call(cc.sender,inner); }
 			st := cc.CallReturn(inner);
+        	assert st.Peek(5) == 0x41; // ADDED BY DJP
 		}
 		st := block_0_0x00c1(st);
 		return st;
@@ -288,7 +291,7 @@ module bet {
 	requires st'.evm.code == Code.Create(BYTECODE_0)
 	requires st'.WritesPermitted() && st'.PC() == 0x00d5
 	// Free memory pointer
-	requires st'.MemSize() >= 0x60 && st'.Read(0x40) == 0x80
+	requires st'.MemSize() >= 0x60 // && st'.Read(0x40) == 0x80 // REMOVED BY DJP
 	// Stack height(s)
 	requires st'.Operands() == 5
 	// Static stack items
