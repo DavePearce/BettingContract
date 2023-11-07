@@ -13,7 +13,7 @@ module target {
 	requires st'.evm.code == Code.Create(BYTECODE_0)
 	requires st'.WritesPermitted() && st'.PC() == 0x0063
 	// Free memory pointer
-	requires Memory.Size(st'.evm.memory) >= 0x60 && st'.Read(0x40) == 0x80
+	requires st'.MemSize() >= 0x60 && st'.Read(0x40) == 0x80
 	// Stack height(s)
 	requires st'.Operands() == 1
 	{
@@ -44,7 +44,7 @@ module target {
 	requires st'.evm.code == Code.Create(BYTECODE_0)
 	requires st'.WritesPermitted() && st'.PC() == 0x006e
 	// Free memory pointer
-	requires Memory.Size(st'.evm.memory) >= 0x60 && st'.Read(0x40) == 0x80
+	requires st'.MemSize() >= 0x60 && st'.Read(0x40) == 0x80
 	// Stack height(s)
 	requires st'.Operands() == 4
 	// Static stack items
@@ -60,7 +60,7 @@ module target {
 	requires st'.evm.code == Code.Create(BYTECODE_0)
 	requires st'.WritesPermitted() && st'.PC() == 0x006f
 	// Free memory pointer
-	requires Memory.Size(st'.evm.memory) >= 0x60 && st'.Read(0x40) == 0x80
+	requires st'.MemSize() >= 0x60 && st'.Read(0x40) == 0x80
 	// Stack height(s)
 	requires st'.Operands() == 2
 	{
@@ -88,7 +88,7 @@ module target {
 	requires st'.evm.code == Code.Create(BYTECODE_0)
 	requires st'.WritesPermitted() && st'.PC() == 0x0079
 	// Free memory pointer
-	requires Memory.Size(st'.evm.memory) >= 0x60 && st'.Read(0x40) == 0x80
+	requires st'.MemSize() >= 0x60 && st'.Read(0x40) == 0x80
 	// Stack height(s)
 	requires st'.Operands() == 3
 	// Static stack items
@@ -110,6 +110,7 @@ module target {
 		// |fp=0x0080|0x80,0x79,_|
 		st := Push1(st,0x20);
 		// |fp=0x0080|0x20,0x80,0x79,_|
+		assert (st.Peek(0) + st.Peek(1)) <= (MAX_U256 as u256);
 		st := Add(st);
 		st := block_0_0x0083(st);
 		return st;
@@ -119,7 +120,7 @@ module target {
 	requires st'.evm.code == Code.Create(BYTECODE_0)
 	requires st'.WritesPermitted() && st'.PC() == 0x0083
 	// Free memory pointer
-	requires Memory.Size(st'.evm.memory) >= 0x60 && st'.Read(0x40) == 0x80
+	requires st'.MemSize() >= 0x60 && st'.Read(0x40) == 0x80
 	// Stack height(s)
 	requires st'.Operands() == 3
 	// Static stack items
@@ -135,6 +136,7 @@ module target {
 		// |fp=0x0080|0x80,0x80,0xa0,0x79,_|
 		st := Swap(st,2);
 		// |fp=0x0080|0xa0,0x80,0x80,0x79,_|
+		assert st.Peek(1) <= st.Peek(0);
 		st := Sub(st);
 		// |fp=0x0080|0x20,0x80,0x79,_|
 		st := Swap(st,1);

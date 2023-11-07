@@ -13,7 +13,7 @@ module util {
 	requires st'.evm.code == Code.Create(BYTECODE_0)
 	requires st'.WritesPermitted() && st'.PC() == 0x0041
 	// Free memory pointer
-	requires Memory.Size(st'.evm.memory) >= 0x60 && st'.Read(0x40) == 0x80
+	requires st'.MemSize() >= 0x60 && st'.Read(0x40) == 0x80
 	// Stack height(s)
 	requires st'.Operands() == 1
 	{

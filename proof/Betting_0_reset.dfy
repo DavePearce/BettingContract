@@ -15,7 +15,7 @@ module reset {
 	requires st'.evm.code == Code.Create(BYTECODE_0)
 	requires st'.WritesPermitted() && st'.PC() == 0x0043
 	// Free memory pointer
-	requires Memory.Size(st'.evm.memory) >= 0x60 && st'.Read(0x40) == 0x80
+	requires st'.MemSize() >= 0x60 && st'.Read(0x40) == 0x80
 	// Stack height(s)
 	requires st'.Operands() == 1
 	{
@@ -46,7 +46,7 @@ module reset {
 	requires st'.evm.code == Code.Create(BYTECODE_0)
 	requires st'.WritesPermitted() && st'.PC() == 0x004e
 	// Free memory pointer
-	requires Memory.Size(st'.evm.memory) >= 0x60 && st'.Read(0x40) == 0x80
+	requires st'.MemSize() >= 0x60 && st'.Read(0x40) == 0x80
 	// Stack height(s)
 	requires st'.Operands() == 4
 	// Static stack items
@@ -62,7 +62,7 @@ module reset {
 	requires st'.evm.code == Code.Create(BYTECODE_0)
 	requires st'.WritesPermitted() && st'.PC() == 0x004f
 	// Free memory pointer
-	requires Memory.Size(st'.evm.memory) >= 0x60 && st'.Read(0x40) == 0x80
+	requires st'.MemSize() >= 0x60 && st'.Read(0x40) == 0x80
 	// Stack height(s)
 	requires st'.Operands() == 2
 	{
@@ -92,7 +92,7 @@ module reset {
 	requires st'.evm.code == Code.Create(BYTECODE_0)
 	requires st'.WritesPermitted() && st'.PC() == 0x005e
 	// Free memory pointer
-	requires Memory.Size(st'.evm.memory) >= 0x60 && st'.Read(0x40) == 0x80
+	requires st'.MemSize() >= 0x60 && st'.Read(0x40) == 0x80
 	// Stack height(s)
 	requires st'.Operands() == 3
 	// Static stack items
@@ -114,7 +114,7 @@ module reset {
 	requires st'.evm.code == Code.Create(BYTECODE_0)
 	requires st'.WritesPermitted() && st'.PC() == 0x00da
 	// Free memory pointer
-	requires Memory.Size(st'.evm.memory) >= 0x60 && st'.Read(0x40) == 0x80
+	requires st'.MemSize() >= 0x60 && st'.Read(0x40) == 0x80
 	// Stack height(s)
 	requires st'.Operands() == 3
 	// Static stack items
@@ -147,7 +147,7 @@ module reset {
 	requires st'.evm.code == Code.Create(BYTECODE_0)
 	requires st'.WritesPermitted() && st'.PC() == 0x00ed
 	// Free memory pointer
-	requires Memory.Size(st'.evm.memory) >= 0x60 && st'.Read(0x40) == 0x80
+	requires st'.MemSize() >= 0x60 && st'.Read(0x40) == 0x80
 	// Stack height(s)
 	requires st'.Operands() == 4
 	// Static stack items
@@ -165,7 +165,7 @@ module reset {
 	requires st'.evm.code == Code.Create(BYTECODE_0)
 	requires st'.WritesPermitted() && st'.PC() == 0x00ef
 	// Free memory pointer
-	requires Memory.Size(st'.evm.memory) >= 0x60 && st'.Read(0x40) == 0x80
+	requires st'.MemSize() >= 0x60 && st'.Read(0x40) == 0x80
 	// Stack height(s)
 	requires st'.Operands() == 3
 	// Static stack items
@@ -198,7 +198,7 @@ module reset {
 	requires st'.evm.code == Code.Create(BYTECODE_0)
 	requires st'.WritesPermitted() && st'.PC() == 0x00fb
 	// Free memory pointer
-	requires Memory.Size(st'.evm.memory) >= 0x60 && st'.Read(0x40) == 0x80
+	requires st'.MemSize() >= 0x60 && st'.Read(0x40) == 0x80
 	// Stack height(s)
 	requires st'.Operands() == 5
 	// Static stack items
@@ -214,7 +214,7 @@ module reset {
 	requires st'.evm.code == Code.Create(BYTECODE_0)
 	requires st'.WritesPermitted() && st'.PC() == 0x00fc
 	// Free memory pointer
-	requires Memory.Size(st'.evm.memory) >= 0x60 && st'.Read(0x40) == 0x80
+	requires st'.MemSize() >= 0x60 && st'.Read(0x40) == 0x80
 	// Stack height(s)
 	requires st'.Operands() == 3
 	// Static stack items
@@ -238,7 +238,7 @@ module reset {
 	requires st'.evm.code == Code.Create(BYTECODE_0)
 	requires st'.WritesPermitted() && st'.PC() == 0x0101
 	// Free memory pointer
-	requires Memory.Size(st'.evm.memory) >= 0x60 && st'.Read(0x40) == 0x80
+	requires st'.MemSize() >= 0x60 && st'.Read(0x40) == 0x80
 	// Stack height(s)
 	requires st'.Operands() == 5
 	// Static stack items
@@ -256,6 +256,7 @@ module reset {
 		// |fp=0x0080|0x04,0x20,0x00,0x04,_,0x5e,0x41,_|
 		st := Dup(st,5);
 		// |fp=0x0080|_,0x04,0x20,0x00,0x04,_,0x5e,0x41,_|
+		assert st.Peek(1) <= st.Peek(0);
 		st := Sub(st);
 		// |fp=0x0080|_,0x20,0x00,0x04,_,0x5e,0x41,_|
 		st := SLt(st);
@@ -269,7 +270,7 @@ module reset {
 	requires st'.evm.code == Code.Create(BYTECODE_0)
 	requires st'.WritesPermitted() && st'.PC() == 0x010b
 	// Free memory pointer
-	requires Memory.Size(st'.evm.memory) >= 0x60 && st'.Read(0x40) == 0x80
+	requires st'.MemSize() >= 0x60 && st'.Read(0x40) == 0x80
 	// Stack height(s)
 	requires st'.Operands() == 7
 	// Static stack items
@@ -295,7 +296,7 @@ module reset {
 	requires st'.evm.code == Code.Create(BYTECODE_0)
 	requires st'.WritesPermitted() && st'.PC() == 0x0113
 	// Free memory pointer
-	requires Memory.Size(st'.evm.memory) >= 0x60 && st'.Read(0x40) == 0x80
+	requires st'.MemSize() >= 0x60 && st'.Read(0x40) == 0x80
 	// Stack height(s)
 	requires st'.Operands() == 6
 	// Static stack items

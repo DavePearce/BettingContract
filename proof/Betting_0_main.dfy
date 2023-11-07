@@ -2,8 +2,8 @@ include "../../evm-dafny/src/dafny/evm.dfy"
 include "../../evm-dafny/src/dafny/core/code.dfy"
 include "Betting_0_header.dfy"
 include "Betting_0_reset.dfy"
-include "Betting_0_bet.dfy"
 include "Betting_0_target.dfy"
+include "Betting_0_bet.dfy"
 
 module main {
 	import opened Opcode
@@ -12,8 +12,8 @@ module main {
 	import opened Bytecode
 	import opened Header
 	import opened reset
-	import opened bet
 	import opened target
+	import opened bet
 
 	method block_0_0x0000(st': EvmState.ExecutingState) returns (st'': EvmState.State)
 	requires st'.evm.code == Code.Create(BYTECODE_0)
@@ -48,7 +48,7 @@ module main {
 	requires st'.evm.code == Code.Create(BYTECODE_0)
 	requires st'.WritesPermitted() && st'.PC() == 0x000d
 	// Free memory pointer
-	requires Memory.Size(st'.evm.memory) >= 0x60 && st'.Read(0x40) == 0x80
+	requires st'.MemSize() >= 0x60 && st'.Read(0x40) == 0x80
 	// Stack height(s)
 	requires st'.Operands() == 0
 	{
@@ -77,7 +77,7 @@ module main {
 	requires st'.evm.code == Code.Create(BYTECODE_0)
 	requires st'.WritesPermitted() && st'.PC() == 0x001d
 	// Free memory pointer
-	requires Memory.Size(st'.evm.memory) >= 0x60 && st'.Read(0x40) == 0x80
+	requires st'.MemSize() >= 0x60 && st'.Read(0x40) == 0x80
 	// Stack height(s)
 	requires st'.Operands() == 3
 	// Static stack items
@@ -112,7 +112,7 @@ module main {
 	requires st'.evm.code == Code.Create(BYTECODE_0)
 	requires st'.WritesPermitted() && st'.PC() == 0x002f
 	// Free memory pointer
-	requires Memory.Size(st'.evm.memory) >= 0x60 && st'.Read(0x40) == 0x80
+	requires st'.MemSize() >= 0x60 && st'.Read(0x40) == 0x80
 	// Stack height(s)
 	requires st'.Operands() == 3
 	// Static stack items
@@ -137,7 +137,7 @@ module main {
 	requires st'.evm.code == Code.Create(BYTECODE_0)
 	requires st'.WritesPermitted() && st'.PC() == 0x0034
 	// Free memory pointer
-	requires Memory.Size(st'.evm.memory) >= 0x60 && st'.Read(0x40) == 0x80
+	requires st'.MemSize() >= 0x60 && st'.Read(0x40) == 0x80
 	// Stack height(s)
 	requires st'.Operands() >= 0 && st'.Operands() <= 1
 	{
@@ -161,7 +161,7 @@ module main {
 	requires st'.evm.code == Code.Create(BYTECODE_0)
 	requires st'.WritesPermitted() && st'.PC() == 0x004e
 	// Free memory pointer
-	requires Memory.Size(st'.evm.memory) >= 0x60 && st'.Read(0x40) == 0x80
+	requires st'.MemSize() >= 0x60 && st'.Read(0x40) == 0x80
 	// Stack height(s)
 	requires st'.Operands() == 4
 	// Static stack items
@@ -177,7 +177,7 @@ module main {
 	requires st'.evm.code == Code.Create(BYTECODE_0)
 	requires st'.WritesPermitted() && st'.PC() == 0x006e
 	// Free memory pointer
-	requires Memory.Size(st'.evm.memory) >= 0x60 && st'.Read(0x40) == 0x80
+	requires st'.MemSize() >= 0x60 && st'.Read(0x40) == 0x80
 	// Stack height(s)
 	requires st'.Operands() == 4
 	// Static stack items
